@@ -23,10 +23,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install poetry
+          echo "C:\Users\runneradmin\AppData\Roaming\Python\Scripts" >> $GITHUB_PATH
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           echo "$HOME/.local/bin" >> $GITHUB_PATH
-          echo "C:\Users\runneradmin\AppData\Roaming\Python\Scripts" >> $GITHUB_PATH
-          poetry --version  # Verify Poetry installation
+        shell: bash  # Ensure correct shell is used
+
+      - name: Verify Poetry Installation
+        run: |
+          echo "Checking Poetry version..."
+          poetry --version
+        shell: bash
 
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
