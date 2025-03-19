@@ -26,12 +26,10 @@ jobs:
           echo "C:\Users\runneradmin\AppData\Roaming\Python\Scripts" >> $GITHUB_PATH
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           echo "$HOME/.local/bin" >> $GITHUB_PATH
-        shell: bash  # Ensure correct shell is used
+        shell: bash
 
       - name: Verify Poetry Installation
-        run: |
-          echo "Checking Poetry version..."
-          poetry --version
+        run: poetry --version
         shell: bash
 
       - name: Install dependencies
@@ -40,12 +38,12 @@ jobs:
       - name: Run Tests
         run: poetry run pytest
         env:
-          PYTHONPATH: ${{ github.workspace }}  # Ensure package is discoverable
+          PYTHONPATH: ${{ github.workspace }}
 
       - name: Build package
         run: poetry build
 
       - name: Publish to PyPI
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}  # Use secure API token
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
         run: poetry publish --no-interaction
