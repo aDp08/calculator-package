@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Ensure Windows is used
+    runs-on: windows-latest  # Use Windows runner
 
     steps:
       - name: Checkout repository
@@ -17,21 +17,23 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.8"
+          cache: "poetry"  # Cache dependencies
 
       - name: Install Poetry
         run: pip install poetry
 
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --no-interaction --no-root  # Ensure dependencies are installed
 
       - name: Run Tests
         run: poetry run pytest
+        env:
+          PYTHONPATH: ${{ github.workspace }}  # Ensure package is discoverable
 
       - name: Build package
         run: poetry build
 
       - name: Publish to PyPI
         env:
-          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: poetry publish --username $PYPI_USERNAME --password $PYPI_PASSWORD
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}  # Use secure API token
+        run: poetry publish --no-interaction
