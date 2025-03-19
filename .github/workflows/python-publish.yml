@@ -3,11 +3,11 @@ name: Publish Python Package
 on:
   push:
     branches:
-      - main  # Runs the workflow when changes are pushed to 'main'
+      - main  # Runs on push to 'main' branch
 
 jobs:
   build:
-    runs-on: windows-latest  
+    runs-on: windows-latest  # Ensure Windows is used
 
     steps:
       - name: Checkout repository
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"  
+          python-version: "3.8"
 
       - name: Install Poetry
         run: pip install poetry
