@@ -29,23 +29,20 @@ jobs:
           poetry --version
 
       - name: Get Python Executable Path
-        id: get-python-path
+        id: python-path
+        run: echo "PYTHON_EXEC=$(python -c 'import sys; print(sys.executable)')" >> $GITHUB_ENV
         shell: bash
-        run: echo "PYTHON_EXEC=$(which python)" >> $GITHUB_ENV
 
-      - name: Force Poetry Virtual Environment Reset
-        run: |
-          poetry env list --full-path || echo "No existing virtual environment found"
-          poetry env remove python || echo "Failed to remove or no env found"
-          poetry env use "$PYTHON_EXEC"
-          poetry env info
-        shell: bash
+      - name: Remove Existing Poetry Virtual Environment (if any)
+        run: poetry env remove python || echo "No existing virtual environment found"
         continue-on-error: true
 
+      - name: Use Correct Python Executable in Poetry
+        run: poetry env use "$PYTHON_EXEC"
+        shell: bash
+
       - name: Install Dependencies
-        run: |
-          poetry env use "$PYTHON_EXEC"
-          poetry install --no-interaction --no-root
+        run: poetry install --no-interaction --no-root
         shell: bash
 
       - name: Run Tests
