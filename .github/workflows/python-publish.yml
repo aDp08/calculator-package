@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"  # Using Python 3.9
+          python-version: "3.9"
 
       - name: Install Poetry
         run: |
@@ -28,18 +28,25 @@ jobs:
           python --version
           poetry --version
 
+      - name: Get Python Executable Path
+        id: get-python-path
+        shell: bash
+        run: echo "PYTHON_EXEC=$(which python)" >> $GITHUB_ENV
+
       - name: Force Poetry Virtual Environment Reset
         run: |
           poetry env list --full-path || echo "No existing virtual environment found"
           poetry env remove python || echo "Failed to remove or no env found"
-          poetry env use "C:/hostedtoolcache/windows/Python/3.9.*/x64/python.exe"
+          poetry env use "$PYTHON_EXEC"
           poetry env info
+        shell: bash
         continue-on-error: true
 
       - name: Install Dependencies
         run: |
-          poetry env use "C:/hostedtoolcache/windows/Python/3.9.*/x64/python.exe"
+          poetry env use "$PYTHON_EXEC"
           poetry install --no-interaction --no-root
+        shell: bash
 
       - name: Run Tests
         run: poetry run pytest
