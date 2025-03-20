@@ -28,15 +28,18 @@ jobs:
           python --version
           poetry --version
 
-      - name: Reset Poetry Virtual Environment
+      - name: Force Poetry Virtual Environment Reset
         run: |
-          poetry env list --full-path || echo "No existing virtual env"
+          poetry env list --full-path || echo "No existing virtual environment found"
+          poetry env remove python || echo "Failed to remove or no env found"
           poetry env use "C:/hostedtoolcache/windows/Python/3.9.*/x64/python.exe"
           poetry env info
         continue-on-error: true
 
       - name: Install Dependencies
-        run: poetry install --no-interaction --no-root
+        run: |
+          poetry env use "C:/hostedtoolcache/windows/Python/3.9.*/x64/python.exe"
+          poetry install --no-interaction --no-root
 
       - name: Run Tests
         run: poetry run pytest
