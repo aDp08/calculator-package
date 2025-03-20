@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-latest  # You can change to ubuntu-latest for better compatibility
 
     steps:
       - name: Checkout repository
@@ -22,37 +22,30 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install poetry
-          echo "Setting Poetry to use correct Python version"
-          poetry env use python3
-        shell: pwsh
 
-      - name: Debug Poetry Environment
+      - name: Check Python & Poetry Version
         run: |
-          poetry env info
-        shell: pwsh
+          python --version
+          poetry --version
 
-      - name: Remove Existing Poetry Virtual Environment (if any)
-        run: |
-          poetry env remove python || echo "No existing env found"
-        shell: pwsh
-        continue-on-error: true
+      - name: Set Poetry to Use Correct Python
+        run: poetry env use python3.9  # Ensure it matches the installed Python version
 
-      - name: Install dependencies
+      - name: Show Poetry Environment Info
+        run: poetry env info
+
+      - name: Install Dependencies
         run: poetry install --no-interaction --no-root
-        shell: pwsh
 
       - name: Run Tests
         run: poetry run pytest
         env:
           PYTHONPATH: ${{ github.workspace }}
-        shell: pwsh
 
-      - name: Build package
+      - name: Build Package
         run: poetry build
-        shell: pwsh
 
       - name: Publish to PyPI
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
         run: poetry publish --no-interaction
-        shell: pwsh
