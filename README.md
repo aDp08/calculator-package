@@ -1,5 +1,5 @@
 # calculator-package
-# adip-calculator-unique
+# adip_calculator_unique
 
 **adip-calculator-unique** is a Python package designed for performing basic arithmetic operations. Whether you're building a complex application or need a reliable tool for simple mathematical tasks, this package provides the essential functions for everyday calculations.
 
