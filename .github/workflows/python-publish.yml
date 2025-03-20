@@ -22,15 +22,20 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install poetry
+          echo "Setting Poetry to use correct Python version"
+          poetry env use python3
         shell: pwsh
 
-      - name: Verify Poetry Installation
-        run: poetry --version
+      - name: Debug Poetry Environment
+        run: |
+          poetry env info
         shell: pwsh
 
-      - name: Debug Poetry Path
-        run: echo $env:PATH
+      - name: Remove Existing Poetry Virtual Environment (if any)
+        run: |
+          poetry env remove python || echo "No existing env found"
         shell: pwsh
+        continue-on-error: true
 
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
