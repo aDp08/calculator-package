@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "adip-calculator-unique"  
-version = "0.1.0"
+version = "0.1.1"
 description = "Basic Calculator comprising 5 functionalities: + - % * /"
 authors = ["Aditya Pandey <adityaadityapandey2002@gmail.com>"]
 license = "MIT"
