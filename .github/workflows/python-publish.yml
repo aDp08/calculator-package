@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # You can change to ubuntu-latest for better compatibility
+    runs-on: windows-latest  # Use Windows since Poetry has issues with explicit versions
 
     steps:
       - name: Checkout repository
@@ -23,13 +23,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install poetry
 
-      - name: Check Python & Poetry Version
+      - name: Verify Python & Poetry
         run: |
           python --version
           poetry --version
 
-      - name: Set Poetry to Use Correct Python
-        run: poetry env use python3.9  # Ensure it matches the installed Python version
+      - name: Set Poetry to Use System Python (Fixes python3.9 error)
+        run: poetry env use python  # Use 'python' instead of 'python3.9'
 
       - name: Show Poetry Environment Info
         run: poetry env info
