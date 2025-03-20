@@ -3,7 +3,7 @@ name: Publish Python Package
 on:
   push:
     branches:
-      - main  # Runs when code is pushed to the 'main' branch
+      - main  # Runs when code is pushed to 'main' branch
 
 jobs:
   build:
@@ -28,11 +28,12 @@ jobs:
           python --version
           poetry --version
 
-      - name: Set Python Executable for Poetry
-        run: poetry env use $(python -c "import sys; print(sys.executable)")
-
-      - name: Show Poetry Environment Info
-        run: poetry env info
+      - name: Reset Poetry Virtual Environment
+        run: |
+          poetry env list --full-path || echo "No existing virtual env"
+          poetry env use "C:/hostedtoolcache/windows/Python/3.9.*/x64/python.exe"
+          poetry env info
+        continue-on-error: true
 
       - name: Install Dependencies
         run: poetry install --no-interaction --no-root
