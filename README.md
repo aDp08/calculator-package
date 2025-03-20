@@ -24,4 +24,4 @@ The package includes five key operations: `add`, `subtract`, `multiply`, `divide
 To install **adip-calculator-unique**, use the following pip command:
 
 ```bash
-pip install adip-calculator-unique
+pip install adip_calculator_unique
