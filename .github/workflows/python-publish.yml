@@ -28,6 +28,14 @@ jobs:
           python --version
           poetry --version
 
+      - name: Remove Existing Poetry Virtual Environment (if any)
+        run: |
+          poetry env remove python || echo "No existing virtual environment found"
+        continue-on-error: true
+
+      - name: Recreate Poetry Virtual Environment
+        run: poetry env use $(which python)
+
       - name: Show Poetry Environment Info
         run: poetry env info
 
