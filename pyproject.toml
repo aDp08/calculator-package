@@ -1,16 +1,13 @@
-[project]
-name = "calculator"
+[tool.poetry]
+name = "adip-calculator-unique"  
 version = "0.1.0"
 description = "Basic Calculator comprising 5 functionalities: + - % * /"
-authors = [
-    {name = "aditya",email = "adityaadityapandey2002@gmail.com"}
-]
-license = {text = "MIT"}
+authors = ["Aditya Pandey <adityaadityapandey2002@gmail.com>"]
+license = "MIT"
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-]
 
+[tool.poetry.dependencies]
+python = ">=3.8"  
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

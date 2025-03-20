@@ -1,5 +1,6 @@
 import unittest
-from calculator import add, subtract, multiply, divide,modulo
+from adip_calculator_unique.functions import add, subtract, multiply, divide, modulo
+
 
 class TestCalculator(unittest.TestCase):
 
